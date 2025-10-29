@@ -323,8 +323,29 @@ if (texalpha != undefined) {
 
 Todas las funciones asociadas a la creación de los elementos importantes del sistema solar llevarán texturas para darle cierto toque más realista, dentro de lo que es.
 
+### Luz y sombras
 
+En el sistema se añadió una luz ambiente, AmbientLight. Se encuentra iluminando todo de forma uniforme. 
 
+```
+const Lamb = new THREE.AmbientLight(0xffffff, 0.8);
+   scene.add(Lamb);
+```
 
+Por otro lado, PointLight genera luz desde un punto hacia todas las direcciones. Es con solLuz, la luz generada de esta forma, que se plantea la iluminación que brinda el Sol. 
+
+Se coloca en el punto (0,0,0) para que parezca salir de dentro de la estrella. Se espera que se produzcan sombras, así que se pone castShadow = true. Además, tendrán un radio de 4. Por último, se añaden a la escena planteada.
+
+```
+ const solLuz = new THREE.PointLight(0xffffff, 2, 200);
+   solLuz.position.set(0, 0, 0); 
+   solLuz.castShadow = true;
+   solLuz.shadow.radius = 4;
+   scene.add(solLuz);
+```
+
+### Animación: movimientos
+
+Finalmente, el último punto a comentar es la función animate. En ella es donde se va a controlar cosas como el movimiento de la cámara o de los propios planetas.
 
 
