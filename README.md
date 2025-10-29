@@ -180,6 +180,73 @@ function Planeta(radio, dist, vel, col, f1, f2, texture = undefined, texalpha=un
 
 La creación de una estrella es parecida a la de un planeta, pero con menos datos. Los datos necesarios solo serán el radio, color y la textura básica a poner.
 
+Se crea la esfera con el radio pasado y luego se crea el material con la posibilidad de responder ante la luz. Se le asigna un color básico por si no se pasara ninguna textura. Se crea la figura 3D y se añade a la escena para que pueda verse.
+
+```
+function Estrella(rad, col, texture = undefined) {
+  let geometry = new THREE.SphereGeometry(rad, 10, 10);
+  let mat = new THREE.MeshPhongMaterial({ color: col });
+
+  if (texture !== undefined) {
+    mat.map = texture;
+  }
+  estrella = new THREE.Mesh(geometry, mat);
+  scene.add(estrella);
+}
+```
+
+#### Luna()
+
+Esta función sirve para crear satélites alrededor de los planetas que se le indiquen. Se le debe de indicar el planeta al que pertenece, su radio, distancia del planeta, velocidad, color básico, ángulo de inclinación y la textura opcional que se puede poner.
+
+Se va a rotar sobre en el plano X por el ángulo pasado. Este pivote que ha sido creado será añadido por su lado al planeta para el movimiento alrededor del mismo. Como en los casos anteriores, se debe crea la geometría y el material del satélite. Posteriormente, se le pondrá una textura si es que recibe una.
+
+Se crea el objeto 3D, se coloca a una distancia y se establece su velocidad. Por último la luna se guarda en un array, por si se desea crear varias y se añade el pivote a la luna.
+
+```
+function Luna(planeta, radio, dist, vel, col, angle, texture=undefined) {
+  var pivote = new THREE.Object3D();
+  pivote.rotation.x = angle;
+  planeta.add(pivote);
+  var geom = new THREE.SphereGeometry(radio, 10, 10);
+  let mat = new THREE.MeshPhongMaterial({ color: col });
+
+  if (texture !== undefined) {
+    mat.map = texture;
+  }
+  var luna = new THREE.Mesh(geom, mat);
+  luna.position.x = dist;
+  luna.userData.speed = vel;
+
+  Lunas.push(luna);
+  pivote.add(luna);
+}
+```
+
+#### Meteorito
+
+Para el último caso de objeto creado, se tiene un meteorito. Este se hizo con la idea de plasmar, por ejemplo, el meteorito 3i Atlas. Se le pasa a la función su radio, color básico y una textura si se quiere. Se vuelve a crear su geometría y material, como en los casos anteriores, y se le pone una textura si se proporciona una.
+
+Se crea el objeto 3D. Tendrá una coordenada iniciales algo alejadas del sistema para que pueda empezar desde fuera, pasar por este y luego salir del mismo. De esta forma, se ilustra mejor su movimiento. 
+
+Para la animación, se guarda la velocidad. En este caso se indica el movimiento en los ejes x, z, pero no tiene en el eje y. Por último, se añade a la escena para que se pueda ver.
+
+```
+function Meteorito(rad, col, texture = undefined) {
+  let geometry = new THREE.SphereGeometry(rad, 10, 10);
+  let mat = new THREE.MeshPhongMaterial({ color: col });
+
+  if (texture !== undefined) {
+    mat.map = texture;
+  }
+  meteorito = new THREE.Mesh(geometry, mat);
+  meteorito.position.set(-40, 5, -30); 
+  meteorito.userData = { velocidad: new THREE.Vector3(0.005, 0, 0.003) };
+
+  scene.add(meteorito);
+}
+```
+
 ### Texturas
 
 Los planetas no se podían dejar simplemente con colores planos, se debían de usar texturas. Para ello, se cargan las imágenes que se usarán casi al inicio del init.
