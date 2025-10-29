@@ -287,12 +287,41 @@ scene.background = space;
 
 ```
 
-Tanto el fondo como cada figura creada tendrá su propia textura. El fondo se verá como el espacio, para darle un ambiente algo más realista. Luego se carga cada planeta, nubes, atmósfera, etc. Las variables que han sido creadas serán añadidas en los parámetros de la creación de cada figura. 
+Tanto el fondo como cada figura creada tendrá su propia textura. El fondo se verá como el espacio, para darle un ambiente algo más realista. Luego se carga cada planeta, nubes, atmósfera, etc. Las variables que han sido creadas serán añadidas en los parámetros de la creación de cada figura. El siguiente es un caso en el que se pasa la textura normal.
 
 ```
 Planeta(0.5, 5.8, -4.2, undefined, 1.0, 1.0, venus);
 ```
 
+En algunas casos, como fue mencionado anteriormente, lo que se quiere es ponerle una capa por encima con cierta transparencia. Para ello, se crea otro planeta en el que se deja la primera textura como undefined y se le añade en el campo de texalpha la transparente. A esta figura se le da un tamaño ligeramente mayor al planeta original.
+
+```
+Planeta(0.55, 5.8, -4.2, undefined, 1.0, 1.0, undefined, venus_atmos);
+```
+
+Echándole un vistazo al código, lo que se ve es que se hacen dos cosas:
+
+Para la textura principal, se mira si se pasa. Si se pasa, se pondrá. En caso contrario, se puede ignorar, porque no hace falta hacer nada.
+
+```
+if (texture !== undefined) {
+    mat.map = texture;
+  }
+```
+
+Algo parecido pasa con la textura de, por ejemplo, las nubes, pero se trabaja con más cosas. Si se pasa una textura, si existe, lo que se hace es asignarla al mapa de transparencias, se activa esta misma, se permite que se pueda ver por ambos lados y se establece una opacidad. De esta forma, si tapa demasiado al planeta ni es casi invisible.
+
+```
+if (texalpha != undefined) {
+    //Con mapa de transparencia
+    mat.alphaMap = texalpha;
+    mat.transparent = true;
+    mat.side = THREE.DoubleSide;
+    mat.opacity = 1.0;
+  }
+```
+
+Todas las funciones asociadas a la creación de los elementos importantes del sistema solar llevarán texturas para darle cierto toque más realista, dentro de lo que es.
 
 
 
