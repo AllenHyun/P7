@@ -112,5 +112,123 @@ else if(mode == 3){
   }
 ```
 
+### Elementos en escena
+
+Para que se vea como el Sistema Solar real, se crearon varios planetas, usando la función Planeta(), un sol, con Estrella(), una luna, con Luna() y un meteorito, con Meteorito().
+
+#### Planeta()
+
+Para poder crear un planeta, se le debe de pasar el radio del mismo, la distancia a la que está del sol, la velocidad, el color, la escala de la elipse y dos datos opcionales: la textura normal y el mapa de transparencia.
+
+En cada caso, se crea una esfera con el radio que se le pase a la función. Luego, se crea un material que soporta la luz y sombras; además, se le asigna un color básico que se le pase. 
+
+Como son datos opcionales, si se pasa una textura, se aplica. En caso contrario, ni se prueba ponerlo. Para el mapa de transparencias, se ve las partes que no se deben ver, se habilitan y se establece que el material se pueda ver desde ambos lados.
+
+Se crea crea el planeta 3D y se guardan sus datos, puestos que serán importantes en la animación del mismo. 
+
+Para mostrar el movimiento del planeta, se dibuja una elipse que señala el movimiento sobre el plano XY del cuerpo celeste Por último, se guarda cada uno en un array y se agregan tanto los planetas como sus órbitas a la escena que se está montando.
+
+```
+function Planeta(radio, dist, vel, col, f1, f2, texture = undefined, texalpha=undefined) {
+  // Crear geometría de la esfera
+  let geom = new THREE.SphereGeometry(radio, 32, 32); // más resolución para texturas
+  // Crear material básico
+  let mat = new THREE.MeshPhongMaterial({ color: col });
+
+  if (texture !== undefined) {
+    mat.map = texture;
+  }
+
+  if (texalpha != undefined) {
+    //Con mapa de transparencia
+    mat.alphaMap = texalpha;
+    mat.transparent = true;
+    mat.side = THREE.DoubleSide;
+    mat.opacity = 1.0;
+
+    //Sin mapa de transparencia
+    /*mat.transparent = true;
+    mat.side = THREE.DoubleSide;
+    mat.opacity = 0.8;
+    mat.transparent = true;
+    mat.depthWrite = false;*/
+  }
+
+  // Crear mesh del planeta
+  let planeta = new THREE.Mesh(geom, mat);
+  planeta.userData = { dist, speed: vel, f1, f2 };
+
+  // Crear la órbita
+  let curva = new THREE.EllipseCurve(0, 0, dist * f1, dist * f2);
+  let puntos = curva.getPoints(50);
+  let geome = new THREE.BufferGeometry().setFromPoints(puntos);
+  let mate = new THREE.LineBasicMaterial({ color: 0xffffff });
+  let orbita = new THREE.Line(geome, mate);
+  orbita.rotation.x = Math.PI / 2;
+
+  Planetas.push({
+    planeta: planeta,
+    orbita: orbita
+  });
+
+  scene.add(orbita);
+  scene.add(planeta);
+}
+```
+
+#### Estrella()
+
+La creación de una estrella es parecida a la de un planeta, pero con menos datos. Los datos necesarios solo serán el radio, color y la textura básica a poner.
+
+### Texturas
+
+Los planetas no se podían dejar simplemente con colores planos, se debían de usar texturas. Para ello, se cargan las imágenes que se usarán casi al inicio del init.
+
+```
+const space = new THREE.TextureLoader().load("src/2k_stars_milky_way.jpg");
+scene.background = space;
+
+// Se crean las diversas texturas de los planetas para ponérselas
+
+  const sun = new THREE.TextureLoader().load("src/2k_sun.jpg");
+
+  const mercury = new THREE.TextureLoader().load("src/2k_mercury.jpg");
+
+  const venus = new THREE.TextureLoader().load("src/venus_2k.jpg");
+
+  const earth = new THREE.TextureLoader().load("src/2k_earth_daymap.jpg");
+
+  const mars = new THREE.TextureLoader().load("src/2k_mars.jpg");
+
+  const jupiter = new THREE.TextureLoader().load("src/2k_jupiter.jpg");
+
+  const saturno = new THREE.TextureLoader().load("src/2k_saturn.jpg");
+
+  const urano = new THREE.TextureLoader().load("src/2k_uranus.jpg");
+
+  const neptuno = new THREE.TextureLoader().load("src/2k_neptune.jpg");
+
+  const moon = new THREE.TextureLoader().load("src/2k_moon.jpg");
+
+  // nubes
+  const cloud = new THREE.TextureLoader().load("src/2k_earth_clouds.jpg");
+
+  const venus_atmos = new THREE.TextureLoader().load("src/2k_venus_atmosphere.jpg");
+
+  //meteorito
+  const meteorito_texture = new THREE.TextureLoader().load("src/meteorito.jpg");
+
+```
+
+Tanto el fondo como cada figura creada tendrá su propia textura. El fondo se verá como el espacio, para darle un ambiente algo más realista. Luego se carga cada planeta, nubes, atmósfera, etc. Las variables que han sido creadas serán añadidas en los parámetros de la creación de cada figura. 
+
+```
+Planeta(0.5, 5.8, -4.2, undefined, 1.0, 1.0, venus);
+```
+
+
+
+
+
 
 
