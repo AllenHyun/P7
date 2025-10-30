@@ -183,7 +183,7 @@ function animate() {
     obj.planeta.rotation.y += 0.01;
   });
 
-  // Rotación
+  // Traslación
   Lunas.forEach((luna) => {
     if (luna.parent) {
       luna.parent.rotation.y += 0.01; 
