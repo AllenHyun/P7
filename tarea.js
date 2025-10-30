@@ -14,6 +14,7 @@ let flyControls;
 let t0;
 let sombra = true;
 let meteorito;
+let naveSound;
 let estrella,
 Planetas = [],
 Lunas = [];
@@ -35,41 +36,43 @@ function init() {
   camera.position.set(0, 20, 30);
   camera.lookAt(0, 0, 0)
 
-  const space = new THREE.TextureLoader().load("src/2k_stars_milky_way.jpg");
+  const space = new THREE.TextureLoader().load("src/images/2k_stars_milky_way.jpg");
 
 
   scene.background = space;
 
+  naveSound = new Audio("src/sound/nave.mp3");
+  naveSound.loop = true;
 
   // Se crean las diversas texturas de los planetas para ponérselas
 
-  const sun = new THREE.TextureLoader().load("src/2k_sun.jpg");
+  const sun = new THREE.TextureLoader().load("src/images/2k_sun.jpg");
 
-  const mercury = new THREE.TextureLoader().load("src/2k_mercury.jpg");
+  const mercury = new THREE.TextureLoader().load("src/images/2k_mercury.jpg");
 
-  const venus = new THREE.TextureLoader().load("src/venus_2k.jpg");
+  const venus = new THREE.TextureLoader().load("src/images/venus_2k.jpg");
 
-  const earth = new THREE.TextureLoader().load("src/2k_earth_daymap.jpg");
+  const earth = new THREE.TextureLoader().load("src/images/2k_earth_daymap.jpg");
 
-  const mars = new THREE.TextureLoader().load("src/2k_mars.jpg");
+  const mars = new THREE.TextureLoader().load("src/images/2k_mars.jpg");
 
-  const jupiter = new THREE.TextureLoader().load("src/2k_jupiter.jpg");
+  const jupiter = new THREE.TextureLoader().load("src/images/2k_jupiter.jpg");
 
-  const saturno = new THREE.TextureLoader().load("src/2k_saturn.jpg");
+  const saturno = new THREE.TextureLoader().load("src/images/2k_saturn.jpg");
 
-  const urano = new THREE.TextureLoader().load("src/2k_uranus.jpg");
+  const urano = new THREE.TextureLoader().load("src/images/2k_uranus.jpg");
 
-  const neptuno = new THREE.TextureLoader().load("src/2k_neptune.jpg");
+  const neptuno = new THREE.TextureLoader().load("src/images/2k_neptune.jpg");
 
-  const moon = new THREE.TextureLoader().load("src/2k_moon.jpg");
+  const moon = new THREE.TextureLoader().load("src/images/2k_moon.jpg");
 
   // nubes
-  const cloud = new THREE.TextureLoader().load("src/2k_earth_clouds.jpg");
+  const cloud = new THREE.TextureLoader().load("src/images/2k_earth_clouds.jpg");
 
-  const venus_atmos = new THREE.TextureLoader().load("src/2k_venus_atmosphere.jpg");
+  const venus_atmos = new THREE.TextureLoader().load("src/images/2k_venus_atmosphere.jpg");
 
   //meteorito
-  const meteorito_texture = new THREE.TextureLoader().load("src/meteorito.jpg");
+  const meteorito_texture = new THREE.TextureLoader().load("src/images/meteorito.jpg");
   
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -183,7 +186,7 @@ function animate() {
     obj.planeta.rotation.y += 0.01;
   });
 
-  // Traslación
+  // Rotación
   Lunas.forEach((luna) => {
     if (luna.parent) {
       luna.parent.rotation.y += 0.01; 
@@ -195,22 +198,32 @@ function animate() {
   if (mode === 0) {
     camcontrols.enabled = true;
     flyControls.enabled = false;
+    meteorito.userData.sound.pause();
+    naveSound.pause();
     camera.position.set(0, 20, 30);
     camera.lookAt(0, 0, 0);
   } else if (mode === 1){
     camcontrols.enabled = false;
     flyControls.enabled = true;
+    meteorito.userData.sound.pause();
+    naveSound.play();
     let t1 = new Date();
     let dt = (t1 -t0) / 1000;
     flyControls.update(dt);
     t0 = t1;
   } else if (mode == 2){
+    meteorito.userData.sound.pause();
+    naveSound.pause();
     const tierra = Planetas[3].planeta;
     camera.position.copy(tierra.position.clone().add(new THREE.Vector3(0, 1, 2)));
     camera.lookAt(tierra.position);
   } else if(mode == 3){
     camcontrols.enabled = false;
   flyControls.enabled = false;
+
+  
+  meteorito.userData.sound.play();
+  naveSound.pause();
 
   if (meteorito) {
       camera.position.copy(meteorito.position.clone().add(new THREE.Vector3(0, 1, 2)) 
@@ -316,6 +329,9 @@ function Meteorito(rad, col, texture = undefined) {
   meteorito = new THREE.Mesh(geometry, mat);
   meteorito.position.set(-40, 5, -30); 
   meteorito.userData = { velocidad: new THREE.Vector3(0.005, 0, 0.003) };
+
+  meteorito.userData.sound = new Audio("src/sound/meteorito.mp3");
+  meteorito.userData.sound.loop = true;  
 
   scene.add(meteorito);
 }
