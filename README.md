@@ -28,6 +28,7 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
 - [Texturas](#texturas)
 - [Luz y sombras](#luz-y-sombras)
 - [Animate](#animate)
+- [Webs de referencia](#webs-de-referencia)
 
 ## Tareas
 
@@ -438,3 +439,10 @@ if (meteorito) {
     meteorito.rotation.y += 0.01;
   }
 ```
+
+## Webs de referencia
+
+[- OrbiControls](https://threejs.org/docs/#examples/en/controls/OrbitControls)
+[- FlyControls](https://threejs.org/docs/#examples/en/controls/FlyControls)
+[- Light](https://threejs.org/docs/#api/en/lights/Light)
+[- MesPhongMaterial](https://threejs.org/docs/#api/en/materials/MeshPhongMaterial)
