@@ -27,7 +27,7 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
   * [Meteorito()](#meteorito())
 - [Texturas](#texturas)
 - [Luz y sombras](#luz-y-sombras)
-- [Animación y movimientos](#animación-y-movimientos)
+- [Animación: movimientos](#animación:-movimientos)
 
 ## Tareas
 
