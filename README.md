@@ -13,6 +13,22 @@ María Cabrera Vérgez
 
 Se pide como tarea la creación de un sistema planetario. Debe de contener al menos 5 planetas y alguna luna. Además, se debe de integrar lo aprendido sobre iluminación y texturas. Se podrá ver el sistema completo o alternar entre otras vistas, como la de una nave. Se entregará el código mediante un enlace a github. Se realizará un README descriptivo con un enlace al repositorio de codesandbox. Por último, debe incluirse un vídeo ejecutando la tarea realizada.
 
+## Índice de contenidos
+
+- [Diferentes vistas controladas por GUI](#diferentes_vistas_controladas_por_GUI)
+  * [Modo 0]
+  * [Modo 1]
+  * [Modo 2]
+  * [Modo 3]
+- [Elementos en escena]
+  * [Planeta()]
+  * [Estrella()]
+  * [Luna()]
+  * [Meteorito()]
+- [Texturas]
+- [Luz y sombras]
+- [Animación y movimientos]
+
 ## Tareas
 
 ### Diferentes vistas controladas por GUI
@@ -346,6 +362,79 @@ Se coloca en el punto (0,0,0) para que parezca salir de dentro de la estrella. S
 
 ### Animación: movimientos
 
-Finalmente, el último punto a comentar es la función animate. En ella es donde se va a controlar cosas como el movimiento de la cámara o de los propios planetas.
+Finalmente, el último punto a comentar es la función animate(). En ella es donde se va a controlar cosas como el movimiento de la cámara o de los propios planetas.
 
+Lo primero que se hace es pedir que la función animate se ejecute una y otra vez, así se ve el movimiento sin interrupciones, creando un bucle.
 
+Lo primero que se hace es el movimiento de rotación del Sol. Este girará lentamente (ya que el aumento es de 0.005) sobre su propio eje. 
+
+```
+estrella.rotation.y += 0.005;
+```
+
+Para las órbitas de los planetas, se deben de usar las funciones del coseno y seno para dar forma al movimiento circular. Cuando se tiene ya la orbita, se calcula la rotación del planeta sobre su propio eje, como sucedía con el Sol.
+
+```
+// Rotación y traslación
+  Planetas.forEach((obj) => {
+    obj.planeta.position.x =
+      Math.cos(Date.now() * 0.0002 * obj.planeta.userData.speed) *
+      obj.planeta.userData.dist;
+
+    obj.planeta.position.z =
+      Math.sin(Date.now() * 0.0002 * obj.planeta.userData.speed) *
+      obj.planeta.userData.dist;
+
+    obj.planeta.rotation.y += 0.01;
+  });
+```
+
+Para la Luna el movimiento es acompañar a su padre. En el caso de la luna colocada, su padre es la Tierra. El satélite gira sobre un eje, pero no es el suyo propio como en otros casos, si no en el de su padre.
+```
+ // Traslación
+  Lunas.forEach((luna) => {
+    if (luna.parent) {
+      luna.parent.rotation.y += 0.01; 
+    }
+  });
+```
+
+A continuación, se controlan los diferentes modos de cámara que se poseen. Ya durante el apartado de Diferentes vistas controladas por GUI se vió una explicación sobre esa parte del animate().
+```
+if (mode === 0) {
+    camcontrols.enabled = true;
+    flyControls.enabled = false;
+    camera.position.set(0, 20, 30);
+    camera.lookAt(0, 0, 0);
+  } else if (mode === 1){
+    camcontrols.enabled = false;
+    flyControls.enabled = true;
+    let t1 = new Date();
+    let dt = (t1 -t0) / 1000;
+    flyControls.update(dt);
+    t0 = t1;
+  } else if (mode == 2){
+    const tierra = Planetas[3].planeta;
+    camera.position.copy(tierra.position.clone().add(new THREE.Vector3(0, 1, 2)));
+    camera.lookAt(tierra.position);
+  } else if(mode == 3){
+    camcontrols.enabled = false;
+  flyControls.enabled = false;
+
+  if (meteorito) {
+      camera.position.copy(meteorito.position.clone().add(new THREE.Vector3(0, 1, 2)) 
+    );
+    camera.lookAt(meteorito.position); 
+  }
+
+  }
+```
+
+El meteorito rota sobre su eje y y además avanza a lo largo del espacio a la velocidad que se le fue indicada, solo si el meteorito existe. En su movimiento se le indica la dirección también hacia la que debe ir. Pasa por encima del sistema y desaparece de la escena.
+
+```
+if (meteorito) {
+    meteorito.position.add(meteorito.userData.velocidad);
+    meteorito.rotation.y += 0.01;
+  }
+```
