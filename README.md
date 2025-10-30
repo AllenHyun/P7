@@ -16,18 +16,18 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
 ## Índice de contenidos
 
 - [Diferentes vistas controladas por GUI](#diferentes-vistas-controladas-por-gui)
-  * [Modo 0]
-  * [Modo 1]
-  * [Modo 2]
-  * [Modo 3]
-- [Elementos en escena]
-  * [Planeta()]
-  * [Estrella()]
-  * [Luna()]
-  * [Meteorito()]
-- [Texturas]
-- [Luz y sombras]
-- [Animación y movimientos]
+  * [Modo 0](#modo-0)
+  * [Modo 1](#modo-1)
+  * [Modo 2](#modo-2)
+  * [Modo 3](#modo-3)
+- [Elementos en escena](#elementos-en-escena)
+  * [Planeta()](#planeta())
+  * [Estrella()](#estrella())
+  * [Luna()](#luna())
+  * [Meteorito()](#meteorito())
+- [Texturas](#texturas)
+- [Luz y sombras](#luz-y-sombras)
+- [Animación y movimientos](#animacion-y-movimientos)
 
 ## Tareas
 
