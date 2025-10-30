@@ -8,7 +8,7 @@ María Cabrera Vérgez
 
 [- Sistema Solar, entrega prácticas 6/7, vídeo de su ejecución](https://drive.google.com/file/d/1auFrw4eGx5leOXFIyhFbm53c4RU-VgLW/view?usp=sharing)
 
-[- Codesandbox con el código](https://codesandbox.io/p/sandbox/practica-7-t5nwsy)
+[- Codesandbox con el código](https://codesandbox.io/p/sandbox/2ws3ky)
 ## Tareas a realizar
 
 Se pide como tarea la creación de un sistema planetario. Debe de contener al menos 5 planetas y alguna luna. Además, se debe de integrar lo aprendido sobre iluminación y texturas. Se podrá ver el sistema completo o alternar entre otras vistas, como la de una nave. Se entregará el código mediante un enlace a github. Se realizará un README descriptivo con un enlace al repositorio de codesandbox. Por último, debe incluirse un vídeo ejecutando la tarea realizada.
@@ -28,6 +28,7 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
 - [Texturas](#texturas)
 - [Luz y sombras](#luz-y-sombras)
 - [Animate](#animate)
+- [Sonido](#sonido)
 - [Webs de referencia](#webs-de-referencia)
 
 ## Tareas
@@ -440,6 +441,26 @@ if (meteorito) {
   }
 ```
 
+### Sonido
+
+Como consejo del profesor, se optó por añadir sonido en dos apartados. Cuando uno activa la cámara siguiendo al meteorito, se podrá escuchar como se mueve. Por otro lado, el modo cámara activa una música inspirada en Star Wars.
+
+En el caso del meteorito, lo que se debe hacer es crear el audio dentro de la creación del meteorito, pasando enlace al sonido. Posteriormente, para que esté sonando en cada momento y no pare tras 10 segundos, se le debe indicar que debe reproducirse en bucle.
+
+```
+meteorito.userData.sound = new Audio("src/sound/meteorito.mp3");
+meteorito.userData.sound.loop = true;
+```
+
+Para la nave, como no hay función especial para crear una nave, el audio se crea dentro del init, donde se hace lo mismo: indicarle que actue en bucle. Dentro del animate, en el modo de cámara de la nave, se le da al play del audio.
+
+```
+naveSound = new Audio("src/sound/nave.mp3");
+naveSound.loop = true;
+```
+
+Para que no suene dentro del resto de modos, se puso el audio en pause dentro de estos, pero que se siga reproduciendo en el modo en el que deben.
+
 ## Webs de referencia
 
 [- OrbiControls](https://threejs.org/docs/#examples/en/controls/OrbitControls)
@@ -449,3 +470,5 @@ if (meteorito) {
 [- Light](https://threejs.org/docs/#api/en/lights/Light)
 
 [- MesPhongMaterial](https://threejs.org/docs/#api/en/materials/MeshPhongMaterial)
+
+[- Sound](https://codesandbox.io/p/sandbox/audio-player-k63j1?file=%2Fsrc%2Findex.js)
