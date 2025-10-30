@@ -21,13 +21,13 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
   * [Modo 2](#modo-2)
   * [Modo 3](#modo-3)
 - [Elementos en escena](#elementos-en-escena)
-  * [Planeta()](#planeta())
-  * [Estrella()](#estrella())
-  * [Luna()](#luna())
-  * [Meteorito()](#meteorito())
+  * [Planeta()](#planeta)
+  * [Estrella()](#estrella)
+  * [Luna()](#luna)
+  * [Meteorito()](#meteorito)
 - [Texturas](#texturas)
 - [Luz y sombras](#luz-y-sombras)
-- [Animación: movimientos](#animación:-movimientos)
+- [Animate](#animate)
 
 ## Tareas
 
@@ -360,7 +360,7 @@ Se coloca en el punto (0,0,0) para que parezca salir de dentro de la estrella. S
    scene.add(solLuz);
 ```
 
-### Animación: movimientos
+### Animate
 
 Finalmente, el último punto a comentar es la función animate(). En ella es donde se va a controlar cosas como el movimiento de la cámara o de los propios planetas.
 
