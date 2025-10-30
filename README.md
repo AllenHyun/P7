@@ -27,7 +27,7 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
   * [Meteorito()](#meteorito())
 - [Texturas](#texturas)
 - [Luz y sombras](#luz-y-sombras)
-- [Animación y movimientos](#animacion-y-movimientos)
+- [Animación y movimientos](#animación-y-movimientos)
 
 ## Tareas
 
@@ -110,7 +110,7 @@ else if (mode == 2){
   }
 ```
 
-#### Mode 3
+#### Modo 3
 
 El último modo es parecido al anterior, pero en lugar de acercarse a un planeta, lo que se hace es ver de cerca un meteorito que empieza algo alejado del sistema y se va acercando, por detrás del Sol, hasta salir del plano.
 
