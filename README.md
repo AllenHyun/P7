@@ -15,7 +15,7 @@ Se pide como tarea la creación de un sistema planetario. Debe de contener al me
 
 ## Índice de contenidos
 
-- [Diferentes vistas controladas por GUI](#diferentes-vistas-controladas-por_GUI)
+- [Diferentes vistas controladas por GUI](#diferentes-vistas-controladas-por-gui)
   * [Modo 0]
   * [Modo 1]
   * [Modo 2]
