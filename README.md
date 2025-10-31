@@ -6,7 +6,7 @@ María Cabrera Vérgez
 
 ## Enlaces
 
-[- Sistema Solar, entrega prácticas 6/7, vídeo de su ejecución](https://drive.google.com/file/d/1auFrw4eGx5leOXFIyhFbm53c4RU-VgLW/view?usp=sharing)
+[- Sistema Solar, entrega prácticas 6/7, vídeo de su ejecución](https://drive.google.com/file/d/1b-fiYkeGs2T7MEG7_TXcHOQJiqVGBS-L/view?usp=sharing)
 
 [- Codesandbox con el código](https://codesandbox.io/p/sandbox/2ws3ky)
 ## Tareas a realizar
